@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.devMode" value="ture"></constant><!-- 开发模式 -->
+	<package name="demo" namespace="/" extends="struts-default">
+		<!-- struts拦截器配置 -->
+		<interceptors>
+			<interceptor name="userInterceptor"
+				class="userInterceptor" />
+		</interceptors>
+
+		<!-- class属性中不写action的路径，因为在spring已经配置过了，应该写spring中bean的id -->
+		<action name="registerAction" class="registerAction"
+			method="execute">
+			<result name="success">/login.jsp</result>
+			<result name="error">/login.jsp</result>
+		</action>
+		<action name="loginAction" class="loginAction" method="execute">
+			<result name="success">/index.jsp</result>
+			<result name="error">/login.jsp</result>
+
+		</action>
+		<action name="saveIdeaAction" class="saveIdeaAction"
+			method="execute">
+			<result name="success">/idea.jsp</result>
+			<!-- 在Action中使用自定义拦截器 -->
+			<interceptor-ref name="userInterceptor"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		<!-- <action name="showAction" class="showAction" method="execute"> <result 
+			name="success">/show borad.jsp</result> <result name="error">/index.jsp</result> 
+			</action> -->
+		<action name="exAction" class="com.test.action.ExitAction"
+			method="execute">
+			<result name="success">/login.jsp</result>
+		</action>
+		<action name="deleteMsgAction" class="deleteMsgAction"
+			method="execute">
+			<result name="success">/revisemess.jsp</result>
+		</action>
+	</package>
+</struts>
